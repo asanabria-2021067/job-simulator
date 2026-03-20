@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const pool = require('./src/config/db');
 const jugadoresRoutes = require('./src/routes/jugadores');
+const { errorHandler } = require('./src/middlewares/errorHandler');
 
 const app = express();
 const port = process.env.APP_PORT || 3000;
@@ -12,6 +13,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/jugadores', jugadoresRoutes);
+
+app.use(errorHandler);
 
 async function start() {
   let retries = 10;
